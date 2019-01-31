@@ -14,21 +14,24 @@ public class Calculator {
 
     //global variable
     private static double yearlyIncome;//after taxes
+    private static double studentLoans;
 
 
     /**
      *  Welcome message output when program is started
      *
      */
-    public static void welcomeMessage(){
+    private static void welcomeMessage(){
 
         UIManager.put("OptionPane.messageFont", new Font("Sans Serif", Font.PLAIN, 16));
         JOptionPane.showMessageDialog(null,
                 "Welcome to Budget Calculator!\n" +
-                        "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ \n" +
-                "This program was created to help those in financially constraint situations to better manage their\n" +
-                "money. This program will also be useful in general especially young adults who need a stable financial\n" +
-                "plan early on in their career.\n\n" +"Happy Spending! \f",
+                "---------------------------------------------------------------------------- \n" +
+                "This program was created to help those in financially constraint\n" +
+                "situations to better manage their money. This program will\n" +
+                "also be useful in general especially young adults who need a stable\n" +
+                "financial plan early on in their career.\n" +
+                "---------------------------------------------------------------------------- \n"  +"Happy Spending! \f",
                 "Brian's Budget Calculator" , JOptionPane.PLAIN_MESSAGE);
     }
 
@@ -36,12 +39,9 @@ public class Calculator {
      * Asks user questions to determine best planned budget
      *
      */
-    public static void userStatistics(){
+    private static void userStatistics(){
 
-        double studentLoans;
         int studentLoansConfirm;
-        int maximizeRent;
-        int maximizeSavings;
 
         //Asks user if they have student loans
         Object[] options = {"Yes", "No"};
@@ -50,19 +50,14 @@ public class Calculator {
                 "Student Loans", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
                 null, options, options);
 
-        //create an if/else asking for amount on student loans
+        if(studentLoansConfirm == JOptionPane.YES_OPTION) {
+            studentLoans = Double.parseDouble(JOptionPane.showInputDialog(null, "Please enter how much you owe:","20000"));
+        }
+        else {
+            studentLoans = 0;
+        }
 
-        Object[] options2 = {"Yes", "No"};
-        maximizeRent = JOptionPane.showOptionDialog(null,
-                "Would you like to maximize your rent?",
-                "Student Loans", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
-                null, options2, options);
 
-        Object[] options3 = {"Yes", "No"};
-        maximizeSavings = JOptionPane.showOptionDialog(null,
-                "Would you like to maximize your savings?",
-                "Student Loans", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
-                null, options3, options);
         }
 
 
@@ -188,11 +183,12 @@ public class Calculator {
                         " per month after taxes. \nYour biweekly pay should come out to about: $" + biWeeklyPay);
 
 
+        //Output shown in message box
         UIManager.put("OptionPane.messageFont", new Font("Sans Serif", Font.PLAIN, 16));
         JOptionPane.showMessageDialog(null, "Hi " + name + "!\n\nYour hourly salary is $" + wage
                 + "/hr. \n---------------------------------------------------\nYou make $" + totalYearlyIncome +
                 " per year pre-tax. \nYou make $" + yearlyIncome + " per year after taxes. \nYou make $" + monthlyIncome
-                + " per month after taxes. \nYour biweekly pay is $" + biWeeklyPay
+                + " per month after taxes. \nYour bi-weekly pay is $" + biWeeklyPay
                 + "\n---------------------------------------------------","Income Calculator" , JOptionPane.PLAIN_MESSAGE);
 
     }
@@ -210,18 +206,53 @@ public class Calculator {
         double gas;
         double savings;
         double miscellaneous;
+        double studentLoanPayment;
 
         /*------------------------------------------------------------------------*/
         //calculations
-        rent = Math.round((yearlyIncome * 0.30) / 12);
-        carPayment = Math.round((yearlyIncome * 0.10) / 12);
-        food = Math.round((yearlyIncome * 0.15) / 12);
-        gas = Math.round((yearlyIncome * 0.05) / 12);
-        miscellaneous = Math.round((yearlyIncome * 0.15) / 12);
-        savings = Math.round((yearlyIncome * 0.25) / 12);
+        if(studentLoans > 0 && studentLoans <10000) {
+            rent = Math.round((yearlyIncome * 0.25) / 12);
+            carPayment = Math.round((yearlyIncome * 0.10) / 12);
+            food = Math.round((yearlyIncome * 0.15) / 12);
+            gas = Math.round((yearlyIncome * 0.05) / 12);
+            miscellaneous = Math.round((yearlyIncome * 0.10) / 12);
+            savings = Math.round((yearlyIncome * 0.25) / 12);  //.15
+            studentLoanPayment = Math.round((yearlyIncome * 0.10) / 12);
+
+        }
+        else if(studentLoans > 10000 && studentLoans < 25000) {
+            rent = Math.round((yearlyIncome * 0.25) / 12);
+            carPayment = Math.round((yearlyIncome * 0.10) / 12);
+            food = Math.round((yearlyIncome * 0.15) / 12);
+            gas = Math.round((yearlyIncome * 0.05) / 12);
+            miscellaneous = Math.round((yearlyIncome * 0.10) / 12);
+            savings = Math.round((yearlyIncome * 0.20) / 12);
+            studentLoanPayment = Math.round((yearlyIncome * 0.15) / 12);
+        }
+
+        else if(studentLoans > 25000) {
+            rent = Math.round((yearlyIncome * 0.20) / 12);
+            carPayment = Math.round((yearlyIncome * 0.05) / 12);
+            food = Math.round((yearlyIncome * 0.15) / 12);
+            gas = Math.round((yearlyIncome * 0.05) / 12);
+            miscellaneous = Math.round((yearlyIncome * 0.05) / 12);
+            savings = Math.round((yearlyIncome * 0.20) / 12);
+            studentLoanPayment = Math.round((yearlyIncome * 0.30) / 12);
+        }
+
+        else {
+            rent = Math.round((yearlyIncome * 0.30) / 12);
+            carPayment = Math.round((yearlyIncome * 0.10) / 12);
+            food = Math.round((yearlyIncome * 0.15) / 12);
+            gas = Math.round((yearlyIncome * 0.05) / 12);
+            miscellaneous = Math.round((yearlyIncome * 0.15) / 12);
+            savings = Math.round((yearlyIncome * 0.25) / 12);
+            studentLoanPayment = 0;
+
+        }
         /*------------------------------------------------------------------------*/
 
-        //bounds to keep gas and food within reasonable amounts
+        //Extra calculations
         if (gas > 100) {
             rent = rent + (gas - 100);
             gas = 100;
@@ -238,18 +269,26 @@ public class Calculator {
         System.out.println("The following is your recommended budget calculated specifically for you: ");
         System.out.println("Based on take home pay of: $" + yearlyIncome);
         System.out.println(" Rent & Utilities: $" + rent + "\n Car payment: $" + carPayment + "\n Food: $" + food +
-                            "\n Gas: $" + gas + "\n Savings: $" + savings + "\n Miscellaneous: $" + miscellaneous);
+                            "\n Gas: $" + gas + "\n Savings: $" + savings + "\nStudent Loans: $" + studentLoanPayment +
+                            "\n Miscellaneous: $" + miscellaneous);
         if (rent < 400) {
             System.out.println("****It is recommended you get a roommate****");
 
         }
 
-        JOptionPane.showMessageDialog(null, "Allocated budget: Monthly \n\nBased on: $" + yearlyIncome +
-                "/year\n\n" + "Rent & Utilities: $" + rent + "\nCar Payment: $" + carPayment + "\nFood: $" + food + "\nGas: $" + gas +
-                "\nSavings: $" + savings + "\nMiscellaneous: $" + miscellaneous,"Planned Budget", JOptionPane.PLAIN_MESSAGE);
+        //output shown in message box
+        JOptionPane.showMessageDialog(null,
+                "Allocated budget: Monthly \n\nBased on: $" + yearlyIncome +
+                "/year post tax\n\n" + "Rent & Utilities: $" + rent + "\nCar Payment: $" + carPayment + "\nFood: $" +
+                food + "\nGas: $" + gas + "\nSavings: $" + savings + "\nStudent Loans: $" + studentLoanPayment +
+                "\nMiscellaneous: $" + miscellaneous + "\n----------------------------------------------" +
+                "\nApproximate time to pay off loans: " + Math.round(studentLoans/(studentLoanPayment * 12)) + " years.",
+                "Planned Budget", JOptionPane.PLAIN_MESSAGE);
 
         if (rent < 400) {
-            JOptionPane.showMessageDialog(null, "It is HIGHLY recommended that you get a roommate", "Budget Alert!", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null,
+                    "It is HIGHLY recommended that you get a roommate",
+                    "Budget Alert!", JOptionPane.WARNING_MESSAGE);
         }
 
 
