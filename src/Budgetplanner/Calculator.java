@@ -277,13 +277,24 @@ public class Calculator {
         }
 
         //output shown in message box
-        JOptionPane.showMessageDialog(null,
-                "Allocated budget: Monthly \n\nBased on: $" + yearlyIncome +
-                "/year post tax\n\n" + "Rent & Utilities: $" + rent + "\nCar Payment: $" + carPayment + "\nFood: $" +
-                food + "\nGas: $" + gas + "\nSavings: $" + savings + "\nStudent Loans: $" + studentLoanPayment +
-                "\nMiscellaneous: $" + miscellaneous + "\n----------------------------------------------" +
-                "\nApproximate time to pay off loans: " + Math.round(studentLoans/(studentLoanPayment * 12)) + " years.",
-                "Planned Budget", JOptionPane.PLAIN_MESSAGE);
+        if (studentLoans <=0) {
+            JOptionPane.showMessageDialog(null,
+                    "Allocated budget: Monthly \n\nBased on: $" + yearlyIncome +
+                            "/year post tax\n\n" + "Rent & Utilities: $" + rent + "\nCar Payment: $" + carPayment + "\nFood: $" +
+                            food + "\nGas: $" + gas + "\nSavings: $" + savings + "\nStudent Loans: $" + studentLoanPayment +
+                            "\nMiscellaneous: $" + miscellaneous + "\n----------------------------------------------",
+                    "Planned Budget", JOptionPane.PLAIN_MESSAGE);
+
+        }
+        else {
+            JOptionPane.showMessageDialog(null,
+                    "Allocated budget: Monthly \n\nBased on: $" + yearlyIncome +
+                            "/year post tax\n\n" + "Rent & Utilities: $" + rent + "\nCar Payment: $" + carPayment + "\nFood: $" +
+                            food + "\nGas: $" + gas + "\nSavings: $" + savings + "\nStudent Loans: $" + studentLoanPayment +
+                            "\nMiscellaneous: $" + miscellaneous + "\n----------------------------------------------" +
+                            "\nApproximate time to pay off loans: " + Math.round(studentLoans / (studentLoanPayment * 12)) + " years.",
+                    "Planned Budget", JOptionPane.PLAIN_MESSAGE);
+        }
 
         if (rent < 400) {
             JOptionPane.showMessageDialog(null,
